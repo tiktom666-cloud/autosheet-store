@@ -1,0 +1,61 @@
+AUTOSHEET — PRIVATE DELIVERY SETUP GUIDE
+Product: Healthcare Operations Tracker
+Target price: INR 99
+Status: Product page prepared; checkout and automated delivery are not yet connected to the GitHub Pages site.
+
+A. Upload the product page files
+1. Open https://github.com/tiktom666-cloud/autosheet-store
+2. Add/replace catalogue.html and add healthcare-operations-tracker.html at the repository root.
+3. Commit to main and wait for GitHub Pages to publish.
+4. Check:
+   https://tiktom666-cloud.github.io/autosheet-store/catalogue.html
+   https://tiktom666-cloud.github.io/autosheet-store/healthcare-operations-tracker.html
+
+B. Keep the paid master file private
+1. Open the tested native Google Sheets version of the product.
+2. In Google Drive sharing, set General access to Restricted.
+3. Keep the master file owned by your business Google account.
+4. Copy the file ID from its URL (the long value between /d/ and /edit).
+5. Never add the master file to the public GitHub repository or use “Anyone with the link” for the master.
+
+C. Configure the existing Google Apps Script store
+The existing Apps Script code found in your prior project uses these sheet columns:
+Products: ProductID, ProductName, Description, PriceINR, MasterFileID, PreviewURL, Active, CreatedAt
+Orders: OrderID, CustomerName, CustomerEmail, GoogleAccountEmail, ProductID, ProductName, AmountINR, RazorpayPaymentLinkID, PaymentURL, PaymentStatus, GatewayStatus, CreatedAt, PaidAt, DeliveredFileID, DeliveredURL, DeliveryStatus, LastError
+DeliveryLog: Timestamp, OrderID, Event, Details
+
+After setupStore() creates the store spreadsheet:
+1. In the private Products sheet, add one row:
+   ProductID: HEALTH-OPS-001
+   ProductName: Healthcare Operations Tracker
+   Description: Google Sheets-compatible healthcare administrative task, reporting and follow-up tracker.
+   PriceINR: 99
+   MasterFileID: [paste your private native Google Sheet file ID]
+   PreviewURL: [leave blank unless you create a safe preview with fictional data]
+   Active: TRUE
+   CreatedAt: [today's date]
+2. Confirm the master is a native Google Sheets file. The delivery function checks for Google Sheets MIME type.
+3. Keep the Orders and DeliveryLog spreadsheet private. Do not share it with customers.
+
+D. Secure delivery design in the existing backend
+The existing Apps Script code is designed to:
+- read the price from the private Products sheet, not trust a browser-supplied price;
+- create a unique Razorpay Payment Link;
+- verify the payment by querying Razorpay's authenticated Payment Links API;
+- only after confirmed full payment, make a copy of the private master;
+- share the copy with the customer-specified Google account;
+- email the copy URL and log delivery status.
+
+This still needs to be connected to the public GitHub Pages product page. The current doGet() serves the Apps Script Index.html page, and the GitHub Pages product page currently has no working checkout button. Do not tell customers to pay until this connection is completed and tested.
+
+E. Deployment and testing
+1. Use Razorpay TEST credentials first; keep RAZORPAY_KEY_SECRET in Apps Script Project Settings → Script Properties only. Never put secrets in HTML, GitHub, product descriptions or client-side JavaScript.
+2. Confirm the Apps Script web app runs as the owner and access settings are appropriate for the public checkout UI; protect server methods and never accept a browser “payment successful” claim as proof.
+3. Run setupStore() only if not already done. Do not run it repeatedly if you have already set up and populated the store unless you understand its behavior.
+4. Set Script Properties required by your current Code.gs and test the payment/delivery flow end-to-end with Razorpay test mode.
+5. Run installPaymentCheckTrigger() once if this is the exact version of the script and the function exists. Confirm the trigger under Triggers.
+6. Test successful payment, failed/cancelled payment, wrong email, repeat checks, delivery retry and no access before payment.
+7. Only switch to live keys after successful tests and after business details/policies are accurate.
+
+Important delivery note:
+The backend asks for a customer email and a Google account email. To share an editable copy securely, customers must provide the Google account email they will use to open the copy. Do not make copies publicly accessible with “Anyone with the link”.
