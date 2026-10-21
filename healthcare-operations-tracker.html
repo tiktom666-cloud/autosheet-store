@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,32 +7,171 @@
 <meta name="description" content="Healthcare Operations Tracker — a Google Sheets-compatible administrative template for tasks, reporting, supplies, training and follow-ups.">
 <title>Healthcare Operations Tracker | AutoSheet</title>
 <style>
-:root{--ink:#172033;--muted:#657089;--bg:#f6f8fc;--card:#fff;--line:#e4e9f2;--brand:#3157d5;--brand2:#203eaa;--soft:#eaf0ff;--green:#e1f5eb;--amber:#fff8e8;--amberline:#f0dca8}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}a{color:inherit;text-decoration:none}.wrap{width:min(1080px,92%);margin:auto}header{background:#fff;border-bottom:1px solid var(--line)}.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{font-weight:850;font-size:1.35rem;letter-spacing:-.04em}.logo span{color:var(--brand)}nav{display:flex;gap:18px;flex-wrap:wrap;color:#3c4660;font-size:.94rem}.hero{padding:48px 0 40px;background:radial-gradient(circle at 90% 5%,#dce6ff 0,transparent 34%),linear-gradient(135deg,#fff,#f0f4ff)}.crumb{font-size:.88rem;color:var(--muted)}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;margin-top:22px}.tag{display:inline-block;background:var(--soft);color:var(--brand);font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px}.hero h1{font-size:clamp(2.2rem,5vw,3.7rem);line-height:1.08;letter-spacing:-.05em;margin:14px 0}.lead{font-size:1.1rem;color:var(--muted);max-width:650px}.price-row{display:flex;align-items:baseline;gap:12px;margin:22px 0 8px}.price{font-size:2.2rem;font-weight:900;letter-spacing:-.04em}.price-note{font-size:.9rem;color:var(--muted)}.status{padding:15px 16px;border:1px solid var(--amberline);background:var(--amber);border-radius:14px;color:#654d18;margin:20px 0}.preview{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 18px 50px #22345c12}.preview h3{margin:0 0 4px}.preview p{margin:0;color:var(--muted);font-size:.88rem}.mini{margin-top:18px;border:1px solid var(--line);border-radius:12px;overflow:hidden}.r{display:grid;grid-template-columns:1.2fr .9fr .9fr}.r span{padding:10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.8rem}.r span:last-child{border-right:0}.r.head{background:var(--soft);font-weight:800}.section{padding:48px 0}.section h2{font-size:clamp(1.6rem,3.5vw,2.3rem);letter-spacing:-.04em;margin:0 0 10px}.sub{color:var(--muted);max-width:760px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px}.icon{width:42px;height:42px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:1.25rem}.card h3{margin:13px 0 5px;font-size:1.05rem}.card p{margin:0;color:var(--muted);font-size:.94rem}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}.panel ul{padding-left:20px}.panel li{margin:8px 0}.note{font-size:.9rem;color:var(--muted)}.bottom{background:#172033;color:#fff;border-radius:20px;padding:26px;display:flex;justify-content:space-between;gap:18px;align-items:center}.bottom p{color:#d1d8e8;margin:6px 0 0}.btn{display:inline-block;padding:11px 16px;border-radius:11px;font-weight:800;background:#fff;color:#172033;white-space:nowrap}.btn.disabled{background:#dbe1ee;color:#536078;cursor:not-allowed}.footer{padding:24px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;margin-top:36px}.foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+:root{--ink:#172033;--muted:#657089;--bg:#f6f8fc;--card:#fff;--line:#e4e9f2;--brand:#3157d5;--soft:#eaf0ff;--amber:#fff8e8;--amberline:#f0dca8}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1080px,92%);margin:auto}
+header{background:#fff;border-bottom:1px solid var(--line)}
+.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.logo{font-weight:850;font-size:1.35rem;letter-spacing:-.04em}
+.logo span{color:var(--brand)}
+nav{display:flex;gap:18px;flex-wrap:wrap;color:#3c4660;font-size:.94rem}
+.hero{padding:48px 0 40px;background:radial-gradient(circle at 90% 5%,#dce6ff 0,transparent 34%),linear-gradient(135deg,#fff,#f0f4ff)}
+.crumb{font-size:.88rem;color:var(--muted)}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;margin-top:22px}
+.tag{display:inline-block;background:var(--soft);color:var(--brand);font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.7rem);line-height:1.08;letter-spacing:-.05em;margin:14px 0}
+.lead{font-size:1.1rem;color:var(--muted);max-width:650px}
+.price-row{display:flex;align-items:baseline;gap:12px;margin:22px 0 8px}
+.price{font-size:2.2rem;font-weight:900;letter-spacing:-.04em}
+.price-note{font-size:.9rem;color:var(--muted)}
+.status{padding:15px 16px;border:1px solid var(--amberline);background:var(--amber);border-radius:14px;color:#654d18;margin:20px 0}
+.preview{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 18px 50px #22345c12}
+.preview h3{margin:0 0 4px}
+.preview p{margin:0;color:var(--muted);font-size:.88rem}
+.mini{margin-top:18px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.r{display:grid;grid-template-columns:1.2fr .9fr .9fr}
+.r span{padding:10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.8rem}
+.r span:last-child{border-right:0}
+.r.head{background:var(--soft);font-weight:800}
+.section{padding:48px 0}
+.section h2{font-size:clamp(1.6rem,3.5vw,2.3rem);letter-spacing:-.04em;margin:0 0 10px}
+.sub{color:var(--muted);max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px}
+.icon{width:42px;height:42px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:1.25rem}
+.card h3{margin:13px 0 5px;font-size:1.05rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.panel ul{padding-left:20px}
+.panel li{margin:8px 0}
+.note{font-size:.9rem;color:var(--muted)}
+.bottom{background:#172033;color:#fff;border-radius:20px;padding:26px;display:flex;justify-content:space-between;gap:18px;align-items:center}
+.bottom p{color:#d1d8e8;margin:6px 0 0}
+.btn{display:inline-block;padding:11px 16px;border-radius:11px;font-weight:800;background:#fff;color:#172033;white-space:nowrap}
+.btn:hover{background:#eaf0ff}
+.footer{padding:24px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;margin-top:36px}
+.foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 @media(max-width:760px){.nav{padding:14px 0;align-items:flex-start;flex-direction:column}nav{gap:12px}.hero-grid,.grid,.two{grid-template-columns:1fr}.bottom{align-items:flex-start;flex-direction:column}.hero{padding-top:34px}.r span{padding:8px 6px;font-size:.73rem}}
 </style>
 </head>
 <body>
-<header><div class="wrap nav"><a class="logo" href="./index.html">Auto<span>Sheet</span></a><nav><a href="./index.html">Home</a><a href="./catalogue.html">Product ideas & pricing</a><a href="./about.html">About</a><a href="./faq.html">FAQ</a><a href="./contact.html">Contact</a></nav></div></header>
+<header>
+<div class="wrap nav">
+<a class="logo" href="./index.html">Auto<span>Sheet</span></a>
+<nav>
+<a href="./index.html">Home</a>
+<a href="./catalogue.html">Product ideas &amp; pricing</a>
+<a href="./about.html">About</a>
+<a href="./faq.html">FAQ</a>
+<a href="./contact.html">Contact</a>
+</nav>
+</div>
+</header>
+
 <main>
-<section class="hero"><div class="wrap"><div class="crumb"><a href="./index.html">Home</a> / <a href="./catalogue.html">Catalogue</a> / Healthcare Operations Tracker</div><div class="hero-grid"><div><span class="tag">Google Sheets-compatible template</span><h1>Healthcare Operations Tracker</h1><p class="lead">Keep routine administrative work organized with one tracker for tasks, reporting deadlines, facility actions, supplies, training and non-clinical follow-ups.</p><div class="price-row"><span class="price">₹99</span><span class="price-note">planned launch price · one-time purchase</span></div><div class="status"><strong>Sales are not open yet.</strong><br>This page is a product listing preview. Checkout, payment verification and automated delivery have not been connected to this page.</div><p class="note">Includes a Dashboard, Operations Log, Follow-ups Register, editable dropdown lists and a Start Here guide. Delivered as an editable Google Sheets copy after secure checkout is implemented.</p></div>
-<div class="preview"><h3>Illustrative dashboard preview</h3><p>Example only — not live customer data</p><div class="mini"><div class="r head"><span>Activity</span><span>Status</span><span>Due</span></div><div class="r"><span>Monthly report</span><span>In progress</span><span>25 Oct</span></div><div class="r"><span>Supply review</span><span>Not started</span><span>28 Oct</span></div><div class="r"><span>Staff training</span><span>Waiting</span><span>05 Nov</span></div><div class="r"><span>Facility action</span><span>Urgent</span><span>22 Oct</span></div></div><p style="margin-top:12px">All names and records shown are fictional examples.</p></div></div></div></section>
-<section class="section"><div class="wrap"><h2>What's included</h2><p class="sub">A practical starter workbook for organizing administrative activities without storing patient-level data.</p><div class="grid">
+<section class="hero">
+<div class="wrap">
+<div class="crumb"><a href="./index.html">Home</a> / <a href="./catalogue.html">Catalogue</a> / Healthcare Operations Tracker</div>
+<div class="hero-grid">
+<div>
+<span class="tag">Google Sheets-compatible template</span>
+<h1>Healthcare Operations Tracker</h1>
+<p class="lead">Keep routine administrative work organized with one tracker for tasks, reporting deadlines, facility actions, supplies, training and non-clinical follow-ups.</p>
+<div class="price-row"><span class="price">₹99</span><span class="price-note">planned launch price · one-time purchase</span></div>
+
+<div class="status">
+<strong>Checkout is available for testing.</strong><br>
+Payments and automated delivery are currently being tested. Please do not treat this test page as an invitation to make a live purchase.
+</div>
+
+<p class="note">Includes a Dashboard, Operations Log, Follow-ups Register, editable dropdown lists and a Start Here guide. The template is intended for administrative tracking only.</p>
+</div>
+
+<div class="preview">
+<h3>Illustrative dashboard preview</h3>
+<p>Example only — not live customer data</p>
+<div class="mini">
+<div class="r head"><span>Activity</span><span>Status</span><span>Due</span></div>
+<div class="r"><span>Monthly report</span><span>In progress</span><span>25 Oct</span></div>
+<div class="r"><span>Supply review</span><span>Not started</span><span>28 Oct</span></div>
+<div class="r"><span>Staff training</span><span>Waiting</span><span>05 Nov</span></div>
+<div class="r"><span>Facility action</span><span>Urgent</span><span>22 Oct</span></div>
+</div>
+<p style="margin-top:12px">All names and records shown are fictional examples.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="wrap">
+<h2>What's included</h2>
+<p class="sub">A practical starter workbook for organizing administrative activities without storing patient-level data.</p>
+<div class="grid">
 <article class="card"><div class="icon">▦</div><h3>Live summary dashboard</h3><p>Quick counts for total tasks, completed tasks, overdue tasks, tasks due today and open follow-ups.</p></article>
 <article class="card"><div class="icon">✓</div><h3>Operations Log</h3><p>Track task owners, workstreams, priorities, status, start dates, due dates and next actions.</p></article>
 <article class="card"><div class="icon">◷</div><h3>Follow-ups Register</h3><p>Record administrative follow-ups and monitor upcoming or overdue dates.</p></article>
 <article class="card"><div class="icon">⌄</div><h3>Dropdown lists</h3><p>Editable lists for workstreams, priorities, statuses and facility types.</p></article>
 <article class="card"><div class="icon">▤</div><h3>Fictional sample rows</h3><p>See example tasks and learn how the formulas and status flags behave.</p></article>
 <article class="card"><div class="icon">i</div><h3>Quick-start guide</h3><p>Instructions for importing the workbook, customizing lists and using the tracker.</p></article>
-</div></div></section>
-<section class="section" style="padding-top:0"><div class="wrap two"><div class="panel"><h2 style="font-size:1.45rem">Who it's for</h2><ul><li>Healthcare administration teams</li><li>Programme and facility coordinators</li><li>Teams tracking reports, training, supplies and operational tasks</li><li>Anyone needing a simple date-based action register</li></ul></div><div class="panel"><h2 style="font-size:1.45rem">Important limitations</h2><ul><li>Not an official government form or clinical record</li><li>Not a clinical decision-support or medical advice tool</li><li>Do not enter patient names, phone numbers, ABHA numbers or sensitive medical information</li><li>Google Sheets compatibility should be confirmed on the purchaser's account</li></ul></div></div></section>
-<section class="section" style="padding-top:0"><div class="wrap"><div class="bottom"><div><h2 style="margin:0;font-size:1.55rem">Get the Healthcare Operations Tracker</h2><p>Target price ₹99 · Secure checkout and delivery setup in progress.</p></div><span class="btn disabled" aria-disabled="true"><a href="PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE"
-   class="buy-button"
-   target="_blank"
-   rel="noopener">
-  Buy Now — ₹99
-</a></span></div></div></section>
+</div>
+</div>
+</section>
+
+<section class="section" style="padding-top:0">
+<div class="wrap two">
+<div class="panel">
+<h2 style="font-size:1.45rem">Who it's for</h2>
+<ul>
+<li>Healthcare administration teams</li>
+<li>Programme and facility coordinators</li>
+<li>Teams tracking reports, training, supplies and operational tasks</li>
+<li>Anyone needing a simple date-based action register</li>
+</ul>
+</div>
+<div class="panel">
+<h2 style="font-size:1.45rem">Important limitations</h2>
+<ul>
+<li>Not an official government form or clinical record</li>
+<li>Not a clinical decision-support or medical advice tool</li>
+<li>Do not enter patient names, phone numbers, ABHA numbers or sensitive medical information</li>
+<li>Google Sheets compatibility should be confirmed on the purchaser's account</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="section" style="padding-top:0">
+<div class="wrap">
+<div class="bottom">
+<div>
+<h2 style="margin:0;font-size:1.55rem">Get the Healthcare Operations Tracker</h2>
+<p>₹99 target price · Checkout currently in test mode.</p>
+</div>
+<a href="https://script.google.com/macros/s/AKfycbyv7URS0Er9eqgKix_AGyzyqV4xdwOyQhY9G9VeThqNYwtmUStdc9JAxD6Wj3qGIp0V/exec" class="btn" target="_blank" rel="noopener">
+Buy Now — ₹99
+</a>
+</div>
+</div>
+</section>
 </main>
-<footer class="footer"><div class="wrap foot"><span>© <span id="year"></span> AutoSheet. All rights reserved.</span><span><a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a> · <a href="./refunds.html">Refunds</a> · <a href="./delivery.html">Delivery</a></span></div></footer>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
-</body></html>
+
+<footer class="footer">
+<div class="wrap foot">
+<span>© <span id="year"></span> AutoSheet. All rights reserved.</span>
+<span>
+<a href="./privacy.html">Privacy</a> ·
+<a href="./terms.html">Terms</a> ·
+<a href="./refunds.html">Refunds</a> ·
+<a href="./delivery.html">Delivery</a>
+</span>
+</div>
+</footer>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
