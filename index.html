@@ -31,7 +31,7 @@ header{position:sticky;top:0;background:#ffffffed;border-bottom:1px solid var(--
 <script>
 /* Add the Apps Script checkout URL only after backend supports all product IDs.
    Each ID must map server-side to a fixed price and matching delivery link. */
-const CHECKOUT_BASE = "REPLACE_WITH_YOUR_CHECKOUT_URL";
+const CHECKOUT_BASE = "https://script.google.com/macros/s/AKfycbyv7URS0Er9eqgKix_AGyzyqV4xdwOyQhY9G9VeThqNYwtmUStdc9JAxD6Wj3qGIp0V/exec";
 document.querySelectorAll("[data-product]").forEach(button => button.addEventListener("click", event => {
  event.preventDefault();
  if (CHECKOUT_BASE.startsWith("REPLACE_")) { alert("ખરીદી સક્રિય કરવા માટે પહેલા Apps Scriptમાં દરેક પ્રોડક્ટનો ID, ભાવ અને ડિલિવરી લિંક સેટ કરવી જરૂરી છે."); return; }
