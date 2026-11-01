@@ -74,8 +74,7 @@
       height: 100%;
       z-index: 0;
     }
-    .video-bg-container video,
-    .video-bg-container canvas {
+    .video-bg-container video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -719,11 +718,10 @@
     <span>કોઈ માસિક સબ્સ્ક્રિપ્શન ફી નહીં</span>
   </div>
 
-  <!-- Hero with Boomerang Canvas / Video -->
+  <!-- Hero with Hardware-Accelerated Video Background -->
   <header class="hero">
     <div class="video-bg-container">
-      <video id="heroVideo" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260323_071151_38c3924f-c312-48af-a196-3fbb80e4226f.mp4" muted playsinline preload="auto" loop crossorigin="anonymous"></video>
-      <canvas id="boomerangCanvas" style="display:none;"></canvas>
+      <video id="heroVideo" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260323_071151_38c3924f-c312-48af-a196-3fbb80e4226f.mp4" autoplay muted playsinline loop></video>
       <div class="video-scrim"></div>
     </div>
 
@@ -1228,83 +1226,20 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Boomerang Video Canvas Engine
-    (function initBoomerang() {
+    // Smooth Native Video Autoplay
+    (function initHeroVideo() {
       const video = document.getElementById('heroVideo');
-      const canvas = document.getElementById('boomerangCanvas');
-      if (!video || !canvas) return;
-
-      const frames = [];
-      let capturing = true;
-      let lastTime = -1;
-      const MAX_WIDTH = 960;
-
-      const captureFrame = () => {
-        if (!capturing || video.readyState < 2) return;
-        if (video.currentTime === lastTime) return;
-        lastTime = video.currentTime;
-
-        const vw = video.videoWidth;
-        const vh = video.videoHeight;
-        if (!vw || !vh) return;
-
-        const scale = Math.min(1, MAX_WIDTH / vw);
-        const w = Math.round(vw * scale);
-        const h = Math.round(vh * scale);
-
-        try {
-          const c = document.createElement('canvas');
-          c.width = w;
-          c.height = h;
-          const ctx = c.getContext('2d');
-          if (ctx) {
-            ctx.drawImage(video, 0, 0, w, h);
-            frames.push(c);
-          }
-        } catch(e) {}
-      };
-
-      let rafId = 0;
-      const rafLoop = () => {
-        captureFrame();
-        if (capturing) rafId = requestAnimationFrame(rafLoop);
-      };
-
-      const startPlayback = () => {
-        if (frames.length < 5) return;
-        video.style.display = 'none';
-        canvas.style.display = 'block';
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-        canvas.width = frames[0].width;
-        canvas.height = frames[0].height;
-
-        let idx = 0;
-        let dir = 1;
-        let last = performance.now();
-        const interval = 1000 / 30;
-
-        const render = (now) => {
-          if (now - last >= interval) {
-            last = now;
-            ctx.drawImage(frames[idx], 0, 0);
-            idx += dir;
-            if (idx >= frames.length - 1) { idx = frames.length - 1; dir = -1; }
-            else if (idx <= 0) { idx = 0; dir = 1; }
-          }
-          requestAnimationFrame(render);
-        };
-        requestAnimationFrame(render);
-      };
-
-      video.addEventListener('ended', () => {
-        capturing = false;
-        startPlayback();
-      });
-
-      video.play().catch(() => {});
-      rafId = requestAnimationFrame(rafLoop);
+      if (!video) return;
+      video.muted = true;
+      video.playsInline = true;
+      video.loop = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          document.addEventListener('click', () => video.play(), { once: true });
+          document.addEventListener('touchstart', () => video.play(), { once: true });
+        });
+      }
     })();
 
     function toggleMenu() {
